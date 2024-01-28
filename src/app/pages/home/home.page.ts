@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../api.service';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { Platform } from '@ionic/angular';
+import { compileNgModule } from '@angular/compiler';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +14,10 @@ export class HomePage implements OnInit {
   products: any[];
   searchTerm: string = '';
   searchResults: any[] = [];
+  isListening?: boolean;
 
   constructor(
+    private platform: Platform,
     private apiService: ApiService,
     private router: Router,
     private speechRecognition: SpeechRecognition
@@ -56,6 +60,9 @@ export class HomePage implements OnInit {
   }
 
   startListening() {
+    this.isListening = !this.isListening
+    if (this.platform.is('cordova')) {
+      // Code to start speech recognition
     const value = this.speechRecognition.startListening().subscribe(
       (matches: string[]) => {
         console.log('Speech Recognition Result:', matches);
@@ -66,6 +73,10 @@ export class HomePage implements OnInit {
     );
     console.log(value, 'value');
   }
+  else {
+    // const recognition = new SpeechRecognition()
+    // recognition.start();
+  }}
 
   stopListening(): void {
     this.speechRecognition.stopListening();

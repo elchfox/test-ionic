@@ -1,18 +1,38 @@
 <ion-content [fullscreen]="true">
-  
   <ion-header>
     <ion-toolbar>
       <ion-title slot="start" size="large">Home</ion-title>
-      <ion-icon slot="end" style="margin-right: 1rem;" name="log-in-outline" (click)="logout()" color="white"
-        size="large"></ion-icon>
+      <ion-icon
+        slot="end"
+        style="margin-right: 1rem"
+        name="log-in-outline"
+        (click)="logout()"
+        color="white"
+        size="large"
+      ></ion-icon>
     </ion-toolbar>
   </ion-header>
+
+  <div class="position">
+    <div class="wave active"></div>
+  </div>
   <div class="max-width">
-      <div class="wave" ></div>
     <div class="ion-padding">
-      <ion-searchbar [(ngModel)]="searchTerm" color="white" (ionChange)="searchProducts()">
-        <ion-icon name="mic-outline" (click)="startListening()" color="white" size="large"></ion-icon>
-      </ion-searchbar>
+        <div class="row">
+        <ion-searchbar
+          [(ngModel)]="searchTerm"
+          (ionChange)="searchProducts()"
+          showCancelButton="focus"
+        >
+        </ion-searchbar>
+        <span
+          class="wave"
+          [class.active]="isListening"
+          (click)="startListening()"
+        >
+          <ion-icon name="mic-outline"></ion-icon>
+        </span>
+      </div>
       <div *ngFor="let product of products">
         <app-product-card [product]="product"></app-product-card>
       </div>
@@ -21,6 +41,4 @@
       </div>
     </div>
   </div>
-  
-
 </ion-content>
