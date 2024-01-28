@@ -1,4 +1,5 @@
 <ion-content [fullscreen]="true">
+  
   <ion-header>
     <ion-toolbar>
       <ion-title slot="start" size="large">Home</ion-title>
@@ -7,8 +8,9 @@
     </ion-toolbar>
   </ion-header>
   <div class="max-width">
+      <div class="wave" ></div>
     <div class="ion-padding">
-      <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="searchProducts()">
+      <ion-searchbar [(ngModel)]="searchTerm" color="white" (ionChange)="searchProducts()">
         <ion-icon name="mic-outline" (click)="startListening()" color="white" size="large"></ion-icon>
       </ion-searchbar>
       <div *ngFor="let product of products">
@@ -19,5 +21,6 @@
       </div>
     </div>
   </div>
+  
 
 </ion-content>
