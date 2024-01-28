@@ -1,0 +1,23 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title slot="start" size="large">Home</ion-title>
+      <ion-icon slot="end" style="margin-right: 1rem;" name="log-in-outline" (click)="logout()" color="white"
+        size="large"></ion-icon>
+    </ion-toolbar>
+  </ion-header>
+  <div class="max-width">
+    <div class="ion-padding">
+      <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="searchProducts()">
+        <ion-icon name="mic-outline" (click)="startListening()" color="white" size="large"></ion-icon>
+      </ion-searchbar>
+      <div *ngFor="let product of products">
+        <app-product-card [product]="product"></app-product-card>
+      </div>
+      <div *ngIf="(products?.length === 0)" class="ion-padding">
+        No data available.
+      </div>
+    </div>
+  </div>
+
+</ion-content>
