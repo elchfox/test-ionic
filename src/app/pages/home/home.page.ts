@@ -63,15 +63,16 @@ export class HomePage implements OnInit {
     this.isListening = !this.isListening
     if (this.platform.is('cordova')) {
       // Code to start speech recognition
-    const value = this.speechRecognition.startListening().subscribe(
+    this.speechRecognition.startListening().subscribe(
       (matches: string[]) => {
-        console.log('Speech Recognition Result:', matches);
+       this.searchTerm = matches.length > 0 ? matches[0] : ""
+       this.searchProducts()
+       this.stopListening()
       },
       (error) => {
         console.error('Speech Recognition Error:', error);
       }
     );
-    console.log(value, 'value');
   }
   else {
     // const recognition = new SpeechRecognition()
@@ -79,6 +80,7 @@ export class HomePage implements OnInit {
   }}
 
   stopListening(): void {
+    this.isListening = false
     this.speechRecognition.stopListening();
   }
 }

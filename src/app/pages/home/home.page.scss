@@ -11,6 +11,7 @@ ion-searchbar {
   position: fixed;
   top: 50%;
   right: 2rem;
+  z-index: 1;
 }
 .wave {
   padding: 0.2rem;
