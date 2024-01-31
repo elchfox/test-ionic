@@ -1,15 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProductCardModule } from './modules/product-card/product-card.module';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx'; // Import SpeechRecognition
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -20,7 +21,7 @@ import { FormsModule } from '@angular/forms';
     ProductCardModule,
     CommonModule, FormsModule, IonicModule, ProductCardModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },SpeechRecognition],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },SpeechRecognition,StatusBar,AndroidPermissions],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA]
 })

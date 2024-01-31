@@ -24,7 +24,10 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+*{
+  box-sizing: border-box;
 
+}
 ion-content {
   --ion-safe-area-left: 0;
   --ion-safe-area-right: 0;
@@ -32,6 +35,38 @@ ion-content {
   --ion-safe-area-bottom: 0;
   --ion-background-color: #121212;
   padding: 0;
+}
+
+
+ion-header {
+  ion-toolbar {
+    .toolbar-container{
+
+    }
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:  1rem; 
+    --background: #121212;
+    --color: #ffffff;
+    ion-icon {
+      font-size: 1.5rem; 
+      cursor: pointer;
+      flex: unset;
+    }
+    ion-title {
+      flex: unset;
+      padding: 0;
+      font-weight: bold;
+      font-size: 1.5rem; 
+      width: unset;
+      min-width: unset;
+    }
+    &:first-of-type{
+      padding-top: 1rem;
+    }
+  }
 }
 
 ion-label {
@@ -44,6 +79,7 @@ ion-input {
   --ion-background-color: #555;
   --border-color: #777;
   padding-inline: 0.5rem;
+
   input {
     padding-inline: 0.5rem;
   }
@@ -69,9 +105,8 @@ ion-button {
   gap: 1rem;
 }
 
-ion-title {
-  color: #fff;
-}
+
+
 swiper-container {
   width: 100%;
   height: 100%;
@@ -83,6 +118,7 @@ swiper-slide {
   align-items: center;
   justify-content: center;
 }
+
 .row {
   display: flex;
   gap: 0.5rem;
@@ -98,6 +134,7 @@ ion-item {
   gap: 0.5rem;
   --background: transparent;
 }
+
 ion-label,
 ion-input,
 ion-textarea {
@@ -111,6 +148,7 @@ ion-textarea {
   right: 2rem;
   z-index: 100;
 }
+
 .wave {
   padding: 0.2rem;
   cursor: pointer;
@@ -119,10 +157,12 @@ ion-textarea {
   align-items: center;
   display: flex;
   min-width: 25px;
+
   &.active {
     border-radius: 50%;
     aspect-ratio: 1/1;
     background-color: #2ecc71;
+
     &::after {
       content: "";
       position: absolute;
@@ -138,12 +178,13 @@ ion-textarea {
 @keyframes pulse {
 
   50% {
-    scale:1;
+    scale: 1;
     opacity: 1;
     box-shadow: unset,
   }
+
   100% {
-    scale:1.8;
+    scale: 1.8;
     opacity: 0;
     box-shadow: 0 0 0 rgba(46, 204, 113, 0.7),
       0 0 10px rgba(46, 204, 113, 0.5), 0 0 20px rgba(46, 204, 113, 0.3);

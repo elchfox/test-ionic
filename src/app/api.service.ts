@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductUrl, Product } from './interfaces/product.interface';
-import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { Product, ProductUrl } from './interfaces/product.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   private apiUrl = 'https://dummyjson.com/products';
-  constructor(private http: HttpClient,private speechRecognition: SpeechRecognition) {}
+  constructor(private http: HttpClient) {}
 
   getData(): Observable<ProductUrl> {
     return this.http.get<ProductUrl>(this.apiUrl);

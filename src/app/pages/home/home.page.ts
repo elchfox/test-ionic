@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 import { ApiService } from '../../api.service';
-import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
-import { Platform } from '@ionic/angular';
-import { compileNgModule } from '@angular/compiler';
+
+import { SpeechRecognition } from '@awesome-cordova-plugins/speech-recognition/ngx';
 
 @Component({
   selector: 'app-home',
@@ -17,10 +17,10 @@ export class HomePage implements OnInit {
   isListening?: boolean;
 
   constructor(
-    private platform: Platform,
     private apiService: ApiService,
     private router: Router,
-    private speechRecognition: SpeechRecognition
+    private speechRecognition: SpeechRecognition,
+    private androidPermissions: AndroidPermissions
   ) {
     this.products = [];
   }
@@ -65,19 +65,34 @@ export class HomePage implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  startListening() {
-    this.isListening = !this.isListening;
-    if (this.platform.is('cordova')) {
-      this.speechRecognition.startListening().subscribe(
-        (matches: string[]) => {
-          this.searchTerm = matches.length > 0 ? matches[0] : '';
-          this.products = this.apiService.searchProducts(this.searchTerm);
-          this.stopListening();
-        },
-        (error) => {
-          console.error('Speech Recognition Error:', error);
-        }
-      );
+  async startListening() {
+    const permissionStatus = await this.androidPermissions.checkPermission(
+      this.androidPermissions.PERMISSION.RECORD_AUDIO
+    );
+
+    if (permissionStatus) {
+      this.isListening = true;
+      this.speechRecognition
+        .startListening({
+          language: 'en-US',
+          prompt: 'Speak now',
+        })
+        .subscribe(
+          (matches: string[]) => {
+            this.searchTerm = matches.length > 0 ? matches[0] : '';
+            this.products = this.apiService.searchProducts(this.searchTerm);
+            this.stopListening();
+          },
+          (error) => {
+            this.isListening = false;
+            console.error('Speech Recognition Error:', error);
+          }
+        );
+    } else {
+      this.androidPermissions.requestPermissions([
+        this.androidPermissions.PERMISSION.RECORD_AUDIO,
+        this.androidPermissions.PERMISSION.GET_ACCOUNTS,
+      ]);
     }
   }
 
@@ -85,4 +100,5 @@ export class HomePage implements OnInit {
     this.isListening = false;
     this.speechRecognition.stopListening();
   }
+
 }
