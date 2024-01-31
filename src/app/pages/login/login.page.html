@@ -1,28 +1,26 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Login
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-title size="large">Login</ion-title>
+      <ion-title> Login </ion-title>
     </ion-toolbar>
   </ion-header>
   <div class="max-width">
-    <div class="ion-padding">
-      <ion-item>
-        <ion-label position="floating">Username</ion-label>
-        <ion-input [(ngModel)]="username" clearInput></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input [(ngModel)]="password" clearInput></ion-input>
-      </ion-item>
-      <ion-button expand="full" (click)="login()">Login</ion-button>
+    <div class="position">
+      <div class="wave active"></div>
     </div>
+    <div class="ion-padding">
+      <form (ngSubmit)="login()">
+        <ion-item>
+          <ion-label position="floating"  color="light">Username</ion-label>
+          <ion-input
+            [(ngModel)]="username"
+            name="username"
+            clearInput
+          ></ion-input>
+        </ion-item>
+        <ion-button expand="full" type="submit">Login</ion-button>
+      </form>
+    </div>
+    <img src="/assets/image.jpeg" alt="Your Image">
   </div>
 </ion-content>

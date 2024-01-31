@@ -2,7 +2,7 @@
   <div class="background-image">
     <img [src]="product.thumbnail" alt="{{ product.title }}">
     <div class="discount-overlay" *ngIf="product.discountPercentage > 0">
-      <ion-icon name="pricetags" color="white" size="small"></ion-icon>
+      <ion-icon name="pricetags-outline" color="white" size="small"></ion-icon>
       <ion-text color="white">{{ product.discountPercentage }}% OFF</ion-text>
     </div>
   </div>

@@ -4,24 +4,22 @@
       <ion-title slot="start" size="large">Home</ion-title>
       <ion-icon
         slot="end"
-        style="margin-right: 1rem"
+        style="margin-right: 1rem; cursor: pointer"
         name="log-in-outline"
         (click)="logout()"
-        color="white"
+        color="danger"
         size="large"
       ></ion-icon>
     </ion-toolbar>
   </ion-header>
 
-  <div class="position">
-    <div class="wave active"></div>
-  </div>
   <div class="max-width">
     <div class="ion-padding">
-        <div class="row">
+      <div class="row">
         <ion-searchbar
           [(ngModel)]="searchTerm"
-          (ionChange)="searchProducts()"
+          [value]="searchTerm"
+          (ionInput)="searchProducts($event)"
         >
         </ion-searchbar>
         <span
@@ -35,7 +33,7 @@
       <div *ngFor="let product of products">
         <app-product-card [product]="product"></app-product-card>
       </div>
-      <div *ngIf="(products?.length === 0)" class="ion-padding">
+      <div *ngIf="(products?.length === 0)" >
         No data available.
       </div>
     </div>

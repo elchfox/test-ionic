@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -8,17 +9,31 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
   username: string;
-  password: string;
-  constructor(private router: Router) {
+  loginError: string | null = null;
+  constructor(
+    private router: Router,
+    private alertController: AlertController
+  ) {
     this.username = '';
-    this.password = '';
   }
 
   ngOnInit() {}
-  login() {
-    localStorage.setItem('username', this.username);
-    localStorage.setItem('password', this.password);
+  async login() {
+    if (this.username === '1') {
+      localStorage.setItem('username', this.username);
+      this.router.navigate(['/']);
+    } else {
+      await this.ErrorAlert();
+    }
+  }
 
-    this.router.navigate(['/home']);
+  private async ErrorAlert() {
+    const alert = await this.alertController.create({
+      header: 'Login Failed',
+      message: 'Wrong username Please try again.',
+      buttons: ['OK'],
+    });
+
+    await alert.present();
   }
 }

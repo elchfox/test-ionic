@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ApiService } from '../../api.service';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { Platform } from '@ionic/angular';
@@ -24,10 +24,16 @@ export class HomePage implements OnInit {
   ) {
     this.products = [];
   }
-  searchProducts(): void {
+  searchProducts(event: any): void {
+    this.searchTerm = event.target.value;
     this.products = this.apiService.searchProducts(this.searchTerm);
   }
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.fetchData();
+      }
+    });
     this.fetchData();
   }
 
@@ -56,31 +62,27 @@ export class HomePage implements OnInit {
 
   logout() {
     localStorage.clear();
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 
   startListening() {
-    this.isListening = !this.isListening
+    this.isListening = !this.isListening;
     if (this.platform.is('cordova')) {
-      // Code to start speech recognition
-    this.speechRecognition.startListening().subscribe(
-      (matches: string[]) => {
-       this.searchTerm = matches.length > 0 ? matches[0] : ""
-       this.searchProducts()
-       this.stopListening()
-      },
-      (error) => {
-        console.error('Speech Recognition Error:', error);
-      }
-    );
+      this.speechRecognition.startListening().subscribe(
+        (matches: string[]) => {
+          this.searchTerm = matches.length > 0 ? matches[0] : '';
+          this.products = this.apiService.searchProducts(this.searchTerm);
+          this.stopListening();
+        },
+        (error) => {
+          console.error('Speech Recognition Error:', error);
+        }
+      );
+    }
   }
-  else {
-    // const recognition = new SpeechRecognition()
-    // recognition.start();
-  }}
 
   stopListening(): void {
-    this.isListening = false
+    this.isListening = false;
     this.speechRecognition.stopListening();
   }
 }

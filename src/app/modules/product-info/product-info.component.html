@@ -1,60 +1,78 @@
-<div class="padding-top">
+<div class="card padding-top">
   <ng-template #elseBlock>
-  <div class="background-image" >
-    <swiper-container [loop]="true" [pagination]="true">
-      <swiper-slide *ngFor="let image of displayedImages"><img [src]="image" alt="Slide {{ image }}"
-          class="slide-image"></swiper-slide>
-    </swiper-container>
-    <div class="discount-overlay" *ngIf="product.discountPercentage > 0">
-      <ion-icon name="pricetags" color="white" size="small"></ion-icon>
-      <ion-text color="white">{{ product.discountPercentage }}% OFF</ion-text>
+    <div class="background-image">
+      <swiper-container [loop]="true" [pagination]="true">
+        <swiper-slide *ngFor="let image of displayedImages">
+          <img [src]="image" alt="Slide {{ image }}" class="slide-image" />
+        </swiper-slide>
+      </swiper-container>
+      <div class="discount-overlay" *ngIf="product.discountPercentage > 0">
+        <ion-icon name="pricetags-outline" size="small"></ion-icon>
+        <ion-text>{{ product.discountPercentage }}% OFF</ion-text>
+      </div>
     </div>
+    <ion-card-content>
+      <ion-card-header>
+        <div>
+          <ion-card-title>{{ product.title }}</ion-card-title>
+          <ion-card-subtitle>{{ product.category }}</ion-card-subtitle>
+        </div>
+        <ion-icon 
+          name="create-outline"
+          style="cursor: pointer"
+          (click)="editProduct()"
+          size="small"
+        ></ion-icon>
+      </ion-card-header>
+      <ion-text>{{ product.description }}</ion-text>
+    </ion-card-content>
+    <div class="bottom-info">
+      <div class="item-icon">
+        <ion-icon name="cash-outline" size="small"></ion-icon>
+        <ion-text>{{ product.price }}</ion-text>
+      </div>
+      <div class="item-icon">
+        <ion-icon name="cube-outline" size="small"></ion-icon>
+        <ion-text>{{ product.stock }}</ion-text>
+      </div>
+      <div class="item-icon">
+        <ion-icon name="star-outline" size="small"></ion-icon>
+        <ion-text>{{ getStarArray(product.rating) }}</ion-text>
+      </div>
+    </div>
+  </ng-template>
+  <div *ngIf="editing; else elseBlock" class="editing">
+    <ion-item>
+      <ion-label position="floating" color="light">Title</ion-label>
+      <ion-input
+        id="title"
+        [(ngModel)]="editedProduct.title"
+        (ionChange)="updateProduct('title', $event.target.value)"
+        [value]="editedProduct.title"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="light">Price</ion-label>
+      <ion-input
+        id="price"
+        type="number"
+        [(ngModel)]="editedProduct.price"
+        (ionChange)="updateProduct('price', $event.target.value)"
+        [value]="editedProduct.price"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" color="light">Description</ion-label>
+      <ion-textarea
+        id="description"
+        (ionChange)="updateProduct('description', $event.target.value)"
+        [(ngModel)]="editedProduct.description"
+        [value]="editedProduct.description"
+      ></ion-textarea>
+    </ion-item>
+<div>
+    <ion-button (click)="saveChanges()">Save Changes</ion-button>
+    <ion-button (click)="cancelEdit()" color="danger">Cancel</ion-button>
+     
   </div>
-  <ion-card-content>
-    <ion-card-header>
-      <ion-card-title>{{product.title}}</ion-card-title>
-      <ion-card-subtitle>{{product.category}}</ion-card-subtitle>
-      <ion-icon name="create-sharp" (click)="editProduct()" color="white" size="small"></ion-icon>
-
-    </ion-card-header>
-    <ion-text>{{product.description}}</ion-text>
-  </ion-card-content>
-  <div class="bottom-info">
-    <div class="item-icon">
-      <ion-icon name="cash" color="success" size="small"></ion-icon>
-      <ion-text>{{ product.price }}</ion-text>
-    </div>
-    <div class="item-icon">
-      <ion-icon name="cube" color="tertiary" size="small"></ion-icon>
-      <ion-text>{{ product.stock }}</ion-text>
-    </div>
-    <div class="item-icon">
-      <ion-icon name="star" color="warning" size="small"></ion-icon>
-      <ion-text>{{ getStarArray(product.rating) }}</ion-text>
-    </div>
-  </div>
-</ng-template>
-  <!-- Edit form (initially hidden) -->
-  
-    <div *ngIf="editing; else elseBlock">
-      <ion-item>
-        <ion-label position="floating">Title</ion-label>
-        <ion-input id="title" [(ngModel)]="editedProduct.title"
-         (ionChange)="updateProduct('title',$event.target.value)" [value]="editedProduct.title" ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Price</ion-label>
-        <ion-input id="price" type="number" [(ngModel)]="editedProduct.price"  
-        (ionChange)="updateProduct('price',$event.target.value)"
-         [value]="editedProduct.price"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Description</ion-label>
-        <ion-textarea id="description"  (ionChange)="updateProduct('description',$event.target.value)" [(ngModel)]="editedProduct.description" 
-          [value]="editedProduct.description"></ion-textarea>
-      </ion-item>
-
-      <ion-button (click)="saveChanges()">Save Changes</ion-button>
-      <ion-button (click)="cancelEdit()" color="danger">Cancel</ion-button>
-    </div>
 </div>

@@ -8,7 +8,8 @@ import { AppComponent } from './app.component';
 import { ProductCardModule } from './modules/product-card/product-card.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx'; // Import SpeechRecognition
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -17,6 +18,7 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx'; // Imp
     AppRoutingModule,
     HttpClientModule,
     ProductCardModule,
+    CommonModule, FormsModule, IonicModule, ProductCardModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },SpeechRecognition],
   bootstrap: [AppComponent],
